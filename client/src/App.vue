@@ -12,7 +12,7 @@
     created() {
       if (localStorage.eleToken) {
         // 解析token
-        const decoded = jwt_decode(token)
+        const decoded = jwt_decode(localStorage.eleToken)
         // console.log(decoded)
         // token存储到vuex中
         this.$store.dispatch('setAuthenticated', !this.isEmpty(decoded))

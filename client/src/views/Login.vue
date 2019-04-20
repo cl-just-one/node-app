@@ -8,7 +8,7 @@
             <el-input v-model="loginUser.email" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="loginUser.password" autocomplete="off"></el-input>
+            <el-input type="password" v-model="loginUser.password" autocomplete="off" @keyup.enter.native="submitForm('loginForm')"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">登录</el-button>
@@ -65,7 +65,7 @@
             this.$axios.post('/api/users/login', this.loginUser).then(res => {
               if (res) {
                 // 登录成功
-                console.log(res);
+                // console.log(res);
                 // token
                 const { token } = res.data
                 // 存储到ls
