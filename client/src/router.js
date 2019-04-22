@@ -1,16 +1,17 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Index from './views/Index.vue'
-import Register from './views/Register.vue'
-import Login from './views/Login.vue'
-import NotFound from './views/404.vue'
-import Home from './views/Home.vue'
-import InfoShow from './views/InfoShow.vue'
+import Vue from "vue";
+import Router from "vue-router";
+import Index from "./views/Index.vue";
+import Register from "./views/Register.vue";
+import Login from "./views/Login.vue";
+import NotFound from "./views/404.vue";
+import Home from "./views/Home.vue";
+import InfoShow from "./views/InfoShow.vue";
+import FoundList from "./views/FoundList.vue";
 
-Vue.use(Router)
+Vue.use(Router);
 
 const router = new Router({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
@@ -18,48 +19,56 @@ const router = new Router({
       redirect: "/index"
     },
     {
-      path: '/index',
-      name: 'index',
+      path: "/index",
       component: Index,
-      children: [{
-        path: "/",
-        component: Home
-      }, {
-        path: "/home",
-        name: "home",
-        component: Home
-      }, {
-        path: "/infoShow",
-        name: "infoShow",
-        component: InfoShow
-      }]
+      children: [
+        {
+          path: "/",
+          component: Home
+        },
+        {
+          path: "/home",
+          name: "home",
+          component: Home
+        },
+        {
+          path: "/infoShow",
+          name: "infoShow",
+          component: InfoShow
+        },
+        {
+          path: "/foundList",
+          name: "foundList",
+          component: FoundList
+        }
+      ]
     },
     {
-      path: '/register',
+      path: "/register",
       name: "register",
       component: Register
     },
     {
-      path: '/login',
+      path: "/login",
       name: "login",
       component: Login
     },
     {
-      path: '*',
-      name: 'NotFound',
+      path: "*",
+      name: "NotFound",
       component: NotFound
     }
   ]
-})
+});
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
-  const isLogin = localStorage.getItem('eleToken') ? true : false
-  if (to.path == '/login' || to.path == '/register') {
-    next()
+  const isLogin = localStorage.getItem("eleToken") ? true : false;
+  if (to.path == "/login" || to.path == "/register") {
+    next();
   } else {
-    isLogin ? next() : router.push('/login')
+    isLogin ? next() : router.push("/login");
   }
-})
+});
 
-export default router
+export default router;

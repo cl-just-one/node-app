@@ -14,7 +14,9 @@ const User = require("../../models/User");
 // @access public
 router.post("/register", (req, res) => {
   // 查询数据库中是否存在邮箱
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({
+    email: req.body.email
+  }).then(user => {
     if (user) {
       return res.json({
         status: "1",
@@ -35,8 +37,8 @@ router.post("/register", (req, res) => {
         identity: req.body.identity
       });
       // 密码加盐
-      bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(newUser.password, salt, function(err, hash) {
+      bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(newUser.password, salt, function (err, hash) {
           if (err) {
             throw err;
           }
@@ -65,7 +67,9 @@ router.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   // 查询数据库
-  User.findOne({ email }).then(user => {
+  User.findOne({
+    email
+  }).then(user => {
     if (!user) {
       return res.json({
         msg: "此用户不存在"
@@ -77,12 +81,12 @@ router.post("/login", (req, res) => {
           const rule = {
             id: user.id,
             name: user.name,
+            avatar: user.avatar,
             identity: user.identity
           };
           jwt.sign(
             rule,
-            keys.secretOrKeys,
-            {
+            keys.secretOrKeys, {
               expiresIn: 3600
             },
             (err, token) => {
@@ -110,7 +114,9 @@ router.post("/login", (req, res) => {
 // @access private
 router.get(
   "/current",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", {
+    session: false
+  }),
   (req, res) => {
     res.json({
       id: req.user.id,

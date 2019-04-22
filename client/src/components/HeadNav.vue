@@ -35,6 +35,7 @@ export default {
   name: "head-nav",
   computed: {
     user() {
+      console.log(this.$store.getters.user)
       return this.$store.getters.user 
     }
   },
@@ -53,7 +54,7 @@ export default {
       
     },
     showInfoList() {
-
+      this.$router.push("/infoShow")
     },
     logout() {
       // 清除token
